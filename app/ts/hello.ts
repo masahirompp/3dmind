@@ -3,7 +3,7 @@ module Greeting{
     constructor(private text : string){
     }
       say() : void{
-      console.log(this.text);
+      console.log(this.text + " and you!");
     }
  }
 }
