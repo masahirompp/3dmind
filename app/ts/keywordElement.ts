@@ -30,9 +30,9 @@ class KeywordElement {
       .data(keywords)
       .enter()
       .append('ellipse')
-      .on('click', function(d) {
-        this.clear(d);
-        this.drilldown(d)
+      .on('dblclick', function(d) {
+        KeywordElement.clear(d);
+        KeywordElement.drilldown(d)
       })
       .attr({
         'class': class_name,
@@ -56,7 +56,7 @@ class KeywordElement {
   }
 
   private static clear(keyword: Keyword): void {
-
+    console.dir(keyword);
   }
 
   private static drilldown(keyword: Keyword): void {
