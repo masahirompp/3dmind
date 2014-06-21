@@ -31,7 +31,7 @@ class KeywordElement {
       .enter()
       .append('ellipse')
       .on('dblclick', function(d) {
-        KeywordElement.onClear(d);
+        KeywordElement.onClear(d, d3.select(this));
         KeywordElement.onDrillDown(d)
       })
       .attr({
@@ -56,7 +56,7 @@ class KeywordElement {
   }
 
   public static onClear: {
-    (keywords: Keyword): void;
+    (keywords: Keyword, $self: any): void;
   };
 
   public static onDrillDown: {
