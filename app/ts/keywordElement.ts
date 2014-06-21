@@ -31,8 +31,8 @@ class KeywordElement {
       .enter()
       .append('ellipse')
       .on('dblclick', function(d) {
-        KeywordElement.clear(d);
-        KeywordElement.drilldown(d)
+        KeywordElement.onClear(d);
+        KeywordElement.onDrillDown(d)
       })
       .attr({
         'class': class_name,
@@ -55,13 +55,13 @@ class KeywordElement {
 
   }
 
-  private static clear(keyword: Keyword): void {
-    console.dir(keyword);
-  }
+  public static onClear: {
+    (keywords: Keyword): void;
+  };
 
-  private static drilldown(keyword: Keyword): void {
-
-  }
+  public static onDrillDown: {
+    (keywords: Keyword): void;
+  };
 
   private static drawText(class_name: string, svg: any, keywords: Keyword[], width: number, height: number): void {
     svg.selectAll('text.' + class_name)
