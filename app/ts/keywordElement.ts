@@ -16,17 +16,17 @@ class KeywordElement {
   }
 
   private static drawTheme(svg: any, keywords: Keyword[], width: number, height: number): void {
-    this.drawEllipse(".theme", svg, keywords, width, height);
-    this.drawText(".theme", svg, keywords, width, height);
+    this.drawEllipse("theme", svg, keywords, width, height);
+    this.drawText("theme", svg, keywords, width, height);
   }
 
   private static drawKeywords(svg: any, keywords: Keyword[], width: number, height: number): void {
-    this.drawEllipse(".keyword", svg, keywords, width, height);
-    this.drawText(".keyword", svg, keywords, width, height);
+    this.drawEllipse("keyword", svg, keywords, width, height);
+    this.drawText("keyword", svg, keywords, width, height);
   }
 
   private static drawEllipse(class_name: string, svg: any, keywords: Keyword[], width: number, height: number): void {
-    svg.selectAll('ellipse' + class_name)
+    svg.selectAll('ellipse.' + class_name)
       .data(keywords)
       .enter()
       .append('ellipse')
@@ -64,7 +64,7 @@ class KeywordElement {
   }
 
   private static drawText(class_name: string, svg: any, keywords: Keyword[], width: number, height: number): void {
-    svg.selectAll('text' + class_name)
+    svg.selectAll('text.' + class_name)
       .data(keywords)
       .enter()
       .append('text')
