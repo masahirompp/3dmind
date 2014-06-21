@@ -2,34 +2,30 @@
 
 class KeywordElement {
 
-  public static draw(theme: string, keywords: Keyword[], width: number, height: number): void {
-
+  public static draw(theme: string, keywords: Keyword[], width: number, height: number, depth: number): void {
     var svg: any = d3.select('svg');
 
     this.drawTheme(svg, [{
       keyword: theme,
       x: 0.5,
       y: 0.5
-    }], width, height);
-    this.drawKeywords(svg, keywords, width, height);
-
+    }], width, height, depth);
+    this.drawKeywords(svg, keywords, width, height, depth + 1);
   }
 
-  private static drawTheme(svg: any, keywords: Keyword[], width: number, height: number): void {
-    this.drawEllipse("theme", svg, keywords, width, height);
+  private static drawTheme(svg: any, keywords: Keyword[], width: number, height: number, depth: number): void {
+    this.drawEllipse("theme", svg, keywords, width, height, depth);
     this.drawText("theme", svg, keywords, width, height);
   }
 
-  private static drawKeywords(svg: any, keywords: Keyword[], width: number, height: number): void {
-    this.drawEllipse("keyword", svg, keywords, width, height);
+  private static drawKeywords(svg: any, keywords: Keyword[], width: number, height: number, depth: number): void {
+    this.drawEllipse("keyword", svg, keywords, width, height, depth);
     this.drawText("keyword", svg, keywords, width, height);
   }
 
-  private static drawEllipse(class_name: string, svg: any, keywords: Keyword[], width: number, height: number): void {
+  private static colorScale = d3.scale.category10();
 
-    var ramp = d3.scale.linear()
-      .domain([0, 20])
-      .range(["red", "#FFCCCC"]);
+  private static drawEllipse(class_name: string, svg: any, keywords: Keyword[], width: number, height: number, depth: number): void {
 
     svg.selectAll('ellipse.' + class_name)
       .data(keywords)
@@ -37,7 +33,6 @@ class KeywordElement {
       .append('ellipse')
       .on('dblclick', function(d) {
         KeywordElement.onClear(d, d3.select(this));
-//        KeywordElement.onDrillDown(d)
       })
       .attr({
         'class': class_name,
@@ -50,7 +45,7 @@ class KeywordElement {
         rx: 0,
         ry: 0,
         fill: function(d, i) {
-          return ramp(i);
+          return KeywordElement.colorScale(depth % 10);
         }
       })
       .transition()

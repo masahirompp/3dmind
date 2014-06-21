@@ -13,7 +13,7 @@ $(document)
 
     var ctrl = new DrawController(width, height);
     ctrl.onDraw = function(theme: string, keywords: Keyword[]) {
-      KeywordElement.draw(theme, keywords, width, height);
+      KeywordElement.draw(theme, keywords, width, height, themeStack.length);
     }
 
     KeywordElement.onClear = function(keyword: Keyword, $self: any) {
@@ -25,7 +25,8 @@ $(document)
         .attr({
           rx: width,
           ry: height
-        }).each("end", function() {
+        })
+        .each("end", function() {
           d3.selectAll('text')
             .data([])
             .exit()
@@ -46,11 +47,12 @@ $(document)
       console.dir(themeStack);
       if (ctrl.isCurrentTheme(keyword.keyword)) {
         ctrl.changeTheme(themeStack.pop());
-      }else{
+      } else {
         themeStack.push(ctrl.getCurrentTheme());
         ctrl.changeTheme(keyword.keyword);
       }
-      $('#inputbox').focus();
+      $('#inputbox')
+        .focus();
     }
 
     $('#inputbox')
@@ -60,7 +62,7 @@ $(document)
             if (ctrl.validWord(this.value)) {
               if (ctrl.isReady()) {
                 ctrl.addKeyword(this.value);
-              }else{
+              } else {
                 ctrl.changeTheme(this.value);
               }
               this.value = '';
