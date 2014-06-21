@@ -1,4 +1,5 @@
-/// <reference path="d3.d.ts" />
+/// <reference path="drawController.ts" />
+/// <reference path="jquery.d.ts" />
 
 var width: number = document.documentElement.clientWidth;
 var height: number = document.documentElement.clientHeight;
@@ -6,45 +7,25 @@ var height: number = document.documentElement.clientHeight;
 d3.select('.container-fluid')
   .append('svg');
 
-class Ellipse {
-  private x: number;
-  private y: number;
-  private text: string;
-
-  constructor(text: string, x: number, y: number) {
-    this.x = x;
-    this.y = y;
-    this.text = text;
-  }
-
-  public draw(): void {
-
-    var $svg: any = d3.select('svg');
-
-    $svg.selectAll('ellipse')
-      .data([this.text])
-      .enter()
-      .append('ellipse')
-      .attr({
-        cx: this.x,
-        cy: this.y,
-        rx: 100,
-        ry: 50,
-        fill: 'red'
-      });
-
-    $svg.selectAll('text')
-      .data([this.text])
-      .enter()
-      .append('text')
-      .text('text')
-      .attr({
-        'x': this.x,
-        'y': this.y
-      });
-
-  }
+var ctrl = new DrawController(width, height);
+ctrl.onDraw = function(theme: string, keywords: Keyword[]) {
+  KeywordElement.draw(theme, keywords, width, height);
 }
 
-var test = new Ellipse('aaaaaaa', width / 2, height / 2);
-test.draw();
+ctrl.setTheme('aaaa');
+ctrl.addKeyword('bbbbb');
+ctrl.addKeyword('あんこう');
+ctrl.addKeyword('まままｍ');
+ctrl.addKeyword('さんま');
+
+$(
+  $('#inputbox')
+  .on('keydown', function(e) {
+    if (e.keyCode === 13) {
+      ctrl.addKeyword(this.value);
+      this.value = '';
+      return false;
+    } else {
+      return true;
+    }
+  }))();
