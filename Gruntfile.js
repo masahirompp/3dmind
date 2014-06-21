@@ -390,6 +390,10 @@ module.exports = function(grunt) {
     'htmlmin'
   ]);
 
+  grunt.registerTask('c', [
+    'typescript'
+  ]);
+
   grunt.registerTask('default', [
     'newer:jshint',
     'typescript',
