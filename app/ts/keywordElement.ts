@@ -26,12 +26,17 @@ class KeywordElement {
   }
 
   private static drawEllipse(class_name: string, svg: any, keywords: Keyword[], width: number, height: number): void {
+
+    var ramp = d3.scale.linear()
+      .domain([0, 20])
+      .range(["red", "#FFCCCC"]);
+
     svg.selectAll('ellipse.' + class_name)
       .data(keywords)
       .enter()
       .append('ellipse')
       .on('dblclick', function(d) {
-        KeywordElement.onClear(d);
+        KeywordElement.onClear(d, d3.select(this));
         KeywordElement.onDrillDown(d)
       })
       .attr({
@@ -44,7 +49,9 @@ class KeywordElement {
         },
         rx: 0,
         ry: 0,
-        fill: 'red'
+        fill: function(d, i) {
+          return ramp(i);
+        }
       })
       .transition()
       .duration(600)
@@ -56,7 +63,7 @@ class KeywordElement {
   }
 
   public static onClear: {
-    (keywords: Keyword): void;
+    (keywords: Keyword, $self: any): void;
   };
 
   public static onDrillDown: {

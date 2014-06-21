@@ -16,8 +16,27 @@ $(document)
       KeywordElement.draw(theme, keywords, width, height);
     }
 
-    KeywordElement.onClear = function(keyword: Keyword) {
+    KeywordElement.onClear = function(keyword: Keyword, $self: any) {
       console.dir(keyword);
+      console.dir($self);
+      $self.transition()
+        .duration(300)
+        .ease('in')
+        .attr({
+          rx: width,
+          ry: height
+        })
+        .remove();
+      d3.selectAll('text')
+        .data([])
+        .exit()
+        .remove();
+      d3.selectAll('ellipse')
+        .data([])
+        .exit()
+        .transition()
+        .delay(300)
+        .remove();
     }
 
     KeywordElement.onDrillDown = function(keyword: Keyword) {
