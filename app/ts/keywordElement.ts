@@ -26,6 +26,11 @@ class KeywordElement {
   }
 
   private static drawEllipse(class_name: string, svg: any, keywords: Keyword[], width: number, height: number): void {
+
+    var ramp = d3.scale.linear()
+      .domain([0, 20])
+      .range(["red", "#FFCCCC"]);
+
     svg.selectAll('ellipse.' + class_name)
       .data(keywords)
       .enter()
@@ -44,7 +49,9 @@ class KeywordElement {
         },
         rx: 0,
         ry: 0,
-        fill: 'red'
+        fill: function(d, i) {
+          return ramp(i);
+        }
       })
       .transition()
       .duration(600)
