@@ -12,14 +12,6 @@ ctrl.onDraw = function(theme: string, keywords: Keyword[]) {
   KeywordElement.draw(theme, keywords, width, height);
 }
 
-/*
-ctrl.setTheme('aaaa');
-ctrl.addKeyword('bbbbb');
-ctrl.addKeyword('あんこう');
-ctrl.addKeyword('まままｍ');
-ctrl.addKeyword('さんま');
-*/
-
 $(document)
   .ready(function() {
     $('#inputbox')
@@ -33,5 +25,5 @@ $(document)
         } else {
           return true;
         }
-      })
+      }).focus();
   });
