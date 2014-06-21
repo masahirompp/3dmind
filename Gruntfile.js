@@ -159,7 +159,7 @@ module.exports = function(grunt) {
       all: {
         options: {
           run: true,
-          urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
+          urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/main.html']
         }
       }
     },
@@ -182,7 +182,7 @@ module.exports = function(grunt) {
     // Automatically inject Bower components into the HTML file
     bowerInstall: {
       app: {
-        src: ['<%= config.app %>/index.html'],
+        src: ['<%= config.app %>/main.html'],
         exclude: ['bower_components/bootstrap/dist/js/bootstrap.js']
       }
     },
@@ -209,7 +209,7 @@ module.exports = function(grunt) {
       options: {
         dest: '<%= config.dist %>'
       },
-      html: '<%= config.app %>/index.html'
+      html: '<%= config.app %>/main.html'
     },
 
     // Performs rewrites based on rev and the useminPrepare configuration

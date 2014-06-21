@@ -1,13 +1,14 @@
-module Greeting{
-  export class Hello{
-    constructor(private text : string){
+module Greeting {
+  export class Hello {
+    constructor(private text:string) {
     }
-      say() : void{
+
+    say():void {
       console.log(this.text);
     }
- }
+  }
 }
-var hello : Greeting.Hello = new Greeting.Hello("Hello, World!!!!!");
+var hello:Greeting.Hello = new Greeting.Hello("Hello, World!!!!!");
 hello.say();
 
 
