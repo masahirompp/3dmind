@@ -2,7 +2,7 @@
 
 var dataset : any = ['aaa','bbb','ccc'];
 
-d3.select('.container').selectAll('p')
+d3.select('.container-fluid').selectAll('p')
 .data(dataset)
 .enter()
 .append('p')
