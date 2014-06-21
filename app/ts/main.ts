@@ -35,6 +35,10 @@ $(document)
             .data([])
             .exit()
             .remove();
+          d3.selectAll('circle.tubu')
+            .data([])
+            .exit()
+            .remove();
           (function(keyword: Keyword) {
             KeywordElement.onDrillDown(keyword);
           })(keyword);
