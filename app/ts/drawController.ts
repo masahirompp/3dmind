@@ -1,3 +1,5 @@
+/// <reference path="jquery.d.ts" />
+
 interface Keyword {
   keyword: string;
   x: number;
@@ -26,6 +28,7 @@ class DrawController {
 
   public setTheme(theme: string): void {
     this.currentTheme = theme
+    if (!this.currentTheme) return;
     if (this.themes[theme]) {
       this.onDraw(theme, this.themes[theme])
     } else {
@@ -46,5 +49,17 @@ class DrawController {
       this.themes[this.currentTheme].push(keyword);
     }
     this.onDraw(this.currentTheme, this.themes[this.currentTheme]);
+  }
+
+  public isCurrentTheme(keyword: string): boolean {
+    return this.currentTheme == keyword;
+  }
+
+
+  public validWord(keyword: string): boolean {
+    if(!this.currentTheme) return true;
+    if(this.currentTheme == keyword) return false;
+    if(jQuery.inArray(keyword, this.themes[this.currentTheme]) >= 0) return false;
+    return true;
   }
 }

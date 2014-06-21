@@ -6,6 +6,7 @@ $(document)
 
     var width: number = document.documentElement.clientWidth;
     var height: number = document.documentElement.clientHeight;
+    var themeStack: string[] = [];
 
     d3.select('.container-fluid')
       .append('svg');
@@ -20,15 +21,25 @@ $(document)
     }
 
     KeywordElement.onDrillDown = function(keyword: Keyword) {
-
+      console.dir(themeStack);
+      if (ctrl.isCurrentTheme(keyword.keyword)) {
+        ctrl.setTheme(themeStack.pop());
+      }else{
+        themeStack.push(keyword.keyword);
+        ctrl.setTheme(keyword.keyword);
+      }
     }
 
     $('#inputbox')
       .on('keydown', function(e) {
         if (e.keyCode === 13) {
           if (this.value != "") {
-            ctrl.addKeyword(this.value);
-            this.value = '';
+            if (ctrl.validWord(this.value)) {
+              ctrl.addKeyword(this.value);
+              this.value = '';
+            } else {
+              alert("追加できません。既に入力済みです");
+            }
           }
           return false;
         } else {
