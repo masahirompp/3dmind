@@ -59,6 +59,25 @@ class KeywordElement {
         rx: 100,
         ry: 50
       });
+      jQuery.each(keywords, function(i:number, kw: Keyword) {
+        var data = [1,2,3,4,5];
+
+        svg.selectAll('circle.' + i)
+          .data(data)
+          .enter()
+          .append('circle')
+          .attr({
+            'class': "" + i,
+            cx: function(d, j) {
+              return d.x * (width - 100) + 50 + (100 * Math.sin(j * 10 * (Math.PI / 180)));
+            },
+            cy: function(d, j) {
+              return d.x * (width - 100) + 50 + (50 * Math.cos(j * 10 * (Math.PI / 180)));
+            },
+            r: 5,
+            fill: "red"
+          });
+      });
 
   }
 
