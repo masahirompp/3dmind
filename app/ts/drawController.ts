@@ -35,12 +35,16 @@ class DrawController {
   }
 
   public addKeyword(keywordString: string): void {
-    var keyword = {
-      keyword: keywordString,
-      x: Math.random(), // * this.width,
-      y: Math.random() // * this.height
-    };
-    this.themes[this.currentTheme].push(keyword);
+    if(!this.currentTheme) {
+      this.setTheme(keywordString);
+    }else{
+      var keyword = {
+        keyword: keywordString,
+        x: Math.random(), // * this.width,
+        y: Math.random() // * this.height
+      };
+      this.themes[this.currentTheme].push(keyword);
+    }
     this.onDraw(this.currentTheme, this.themes[this.currentTheme]);
   }
 }

@@ -12,19 +12,23 @@ ctrl.onDraw = function(theme: string, keywords: Keyword[]) {
   KeywordElement.draw(theme, keywords, width, height);
 }
 
+/*
 ctrl.setTheme('aaaa');
 ctrl.addKeyword('bbbbb');
 ctrl.addKeyword('あんこう');
 ctrl.addKeyword('まままｍ');
 ctrl.addKeyword('さんま');
+*/
 
 $(document)
   .ready(function() {
     $('#inputbox')
       .on('keydown', function(e) {
         if (e.keyCode === 13) {
-          ctrl.addKeyword(this.value);
-          this.value = '';
+          if (this.value != "") {
+            ctrl.addKeyword(this.value);
+            this.value = '';
+          }
           return false;
         } else {
           return true;

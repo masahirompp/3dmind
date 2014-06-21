@@ -4,13 +4,30 @@ class KeywordElement {
 
   public static draw(theme: string, keywords: Keyword[], width: number, height: number): void {
 
-    var $svg: any = d3.select('svg');
+    var svg: any = d3.select('svg');
 
-    $svg.selectAll('ellipse')
+    this.drawTheme(svg, [{keyword: theme, x: 0.5, y: 0.5}], width, height);
+    this.drawKeywords(svg, keywords, width, height);
+
+  }
+
+  private static drawTheme(svg: any, keywords: Keyword[], width: number, height: number): void {
+    this.drawEllipse(".theme", svg, keywords, width, height);
+    this.drawText(".theme", svg, keywords, width, height);
+  }
+
+  private static drawKeywords(svg: any, keywords: Keyword[], width: number, height: number): void {
+    this.drawEllipse(".keyword", svg, keywords, width, height);
+    this.drawText(".keyword", svg, keywords, width, height);
+  }
+
+  private static drawEllipse(class_name: string, svg: any, keywords: Keyword[], width: number, height: number): void {
+    svg.selectAll('ellipse' + class_name)
       .data(keywords)
       .enter()
       .append('ellipse')
       .attr({
+        'class': class_name,
         cx: function(d, i) {
           return d.x * (width - 100) + 50;
         },
@@ -22,18 +39,10 @@ class KeywordElement {
         fill: 'red'
       });
 
-    // $svg.selectAll('ellipse')
-    //   .data([this.text])
-    //   .update()
-    //   .attr({
-    //     cx: this.x,
-    //     cy: this.y,
-    //     rx: 100,
-    //     ry: 50,
-    //     fill: 'red'
-    //   });
+  }
 
-    $svg.selectAll('text')
+  private static drawText(class_name: string, svg: any, keywords: Keyword[], width: number, height: number): void {
+    svg.selectAll('text' + class_name)
       .data(keywords)
       .enter()
       .append('text')
@@ -41,6 +50,7 @@ class KeywordElement {
         return d.keyword;
       })
       .attr({
+        'class': class_name,
         x: function(d, i) {
           return d.x * (width - 100) + 50;
         },
@@ -50,6 +60,6 @@ class KeywordElement {
         'text-anchor': 'middle',
         'font-size': 20,
       });
-
   }
 }
+
