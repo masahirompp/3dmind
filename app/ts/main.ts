@@ -1,32 +1,50 @@
 /// <reference path="d3.d.ts" />
 
-var width : number = document.documentElement.clientWidth;
-var height : number = document.documentElement.clientHeight;
+var width: number = document.documentElement.clientWidth;
+var height: number = document.documentElement.clientHeight;
 
-var dataset : any = [10];
+d3.select('.container-fluid')
+  .append('svg');
 
-var $svg : any = d3.select('.container-fluid').append('svg');
+class Ellipse {
+  private x: number;
+  private y: number;
+  private text: string;
 
-$svg.selectAll('ellipse')
-.data(dataset)
-.enter()
-.append('ellipse')
-.attr({
-  cx: width / 2,
-  cy: height / 2,
-  rx: 200,
-  ry: 100,
-  stroke: 'red',
-  'stroke-width': 5,
-  fill: 'red'
-});
+  constructor(text: string, x: number, y: number) {
+    this.x = x;
+    this.y = y;
+    this.text = text;
+  }
 
-$svg.selectAll('text')
-.data(dataset)
-.enter()
-.append('text')
-.text('aaa')
-.attr({
-  x: width / 2,
-  y: height / 2
-});
+  public draw(): void {
+
+    var $svg: any = d3.select('svg');
+
+    $svg.selectAll('ellipse')
+      .data([this.text])
+      .enter()
+      .append('ellipse')
+      .attr({
+        cx: this.x,
+        cy: this.y,
+        rx: 100,
+        ry: 50,
+        fill: 'red'
+      });
+
+    $svg.selectAll('text')
+      .data([this.text])
+      .enter()
+      .append('text')
+      .text('text')
+      .attr({
+        'x': this.x,
+        'y': this.y
+      });
+
+  }
+}
+
+var test = new Ellipse('aaaaaaa', width / 2, height / 2);
+test.draw();
