@@ -18,14 +18,16 @@ ctrl.addKeyword('あんこう');
 ctrl.addKeyword('まままｍ');
 ctrl.addKeyword('さんま');
 
-$(
-  $('#inputbox')
-  .on('keydown', function(e) {
-    if (e.keyCode === 13) {
-      ctrl.addKeyword(this.value);
-      this.value = '';
-      return false;
-    } else {
-      return true;
-    }
-  }))();
+$(document)
+  .ready(function() {
+    $('#inputbox')
+      .on('keydown', function(e) {
+        if (e.keyCode === 13) {
+          ctrl.addKeyword(this.value);
+          this.value = '';
+          return false;
+        } else {
+          return true;
+        }
+      })
+  });
