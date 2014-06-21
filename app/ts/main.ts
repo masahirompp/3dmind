@@ -2,7 +2,7 @@
 
 var dataset : any = [10,20,30,40];
 
-var $svg : any = d3.select('.container').append('svg');
+var $svg : any = d3.select('.container-fluid').append('svg');
 
 $svg.selectAll('circle')
 .data(dataset)
