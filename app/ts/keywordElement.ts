@@ -34,9 +34,15 @@ class KeywordElement {
         cy: function(d, i) {
           return d.y * (height - 50) + 25;
         },
-        rx: 100,
-        ry: 50,
+        rx: 0,
+        ry: 0,
         fill: 'red'
+      })
+      .transition()
+      .duration(600)
+      .attr({
+        rx: 100,
+        ry: 50
       });
 
   }
@@ -58,6 +64,11 @@ class KeywordElement {
           return d.y * (height - 50) + 25 + 10;
         },
         'text-anchor': 'middle',
+        'font-size': 0,
+      })
+      .transition()
+      .duration(700)
+      .attr({
         'font-size': 20,
       });
   }
