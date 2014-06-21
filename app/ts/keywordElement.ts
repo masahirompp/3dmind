@@ -23,7 +23,7 @@ class KeywordElement {
     this.drawText("keyword", svg, keywords, width, height);
 
     jQuery.each(keywords, function(i:number, kw: Keyword) {
-      var data = [1,2,3,4,5];
+      var data = Array(KeywordElement.onWantChildSize(kw.keyword));
 
       svg.selectAll('circle.a' + i)
         .data(data)
@@ -83,6 +83,10 @@ class KeywordElement {
 
   public static onDrillDown: {
     (keywords: Keyword): void;
+  };
+
+  public static onWantChildSize: {
+    (theme: string): number;
   };
 
   private static drawText(class_name: string, svg: any, keywords: Keyword[], width: number, height: number): void {

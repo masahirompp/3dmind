@@ -63,4 +63,12 @@ class DrawController {
     if(jQuery.inArray(keyword, this.themes[this.currentTheme]) >= 0) return false;
     return true;
   }
+
+  public getChildSize(theme: string): number {
+    if (this.themes[theme]) {
+      return this.themes[theme].length;
+    }else {
+      return 0;
+    }
+  }
 }

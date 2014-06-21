@@ -59,6 +59,10 @@ $(document)
         .focus();
     }
 
+    KeywordElement.onWantChildSize = function(theme: string) {
+      return ctrl.getChildSize(theme);
+    }
+
     $('#inputbox')
       .on('keydown', function(e) {
         if (e.keyCode === 13) {
