@@ -25,28 +25,32 @@ $(document)
         .attr({
           rx: width,
           ry: height
-        })
-        .remove();
-      d3.selectAll('text')
-        .data([])
-        .exit()
-        .remove();
-      d3.selectAll('ellipse')
-        .data([])
-        .exit()
-        .transition()
-        .delay(300)
-        .remove();
+        }).each("end", function() {
+          d3.selectAll('text')
+            .data([])
+            .exit()
+            .remove();
+          d3.selectAll('ellipse')
+            .data([])
+            .exit()
+            .remove();
+          (function(keyword: Keyword) {
+            KeywordElement.onDrillDown(keyword);
+          })(keyword);
+        });
+
     }
 
     KeywordElement.onDrillDown = function(keyword: Keyword) {
+      console.dir(keyword);
       console.dir(themeStack);
       if (ctrl.isCurrentTheme(keyword.keyword)) {
-        ctrl.setTheme(themeStack.pop());
+        ctrl.changeTheme(themeStack.pop());
       }else{
-        themeStack.push(keyword.keyword);
-        ctrl.setTheme(keyword.keyword);
+        themeStack.push(ctrl.getCurrentTheme());
+        ctrl.changeTheme(keyword.keyword);
       }
+      $('#inputbox').focus();
     }
 
     $('#inputbox')
@@ -54,7 +58,11 @@ $(document)
         if (e.keyCode === 13) {
           if (this.value != "") {
             if (ctrl.validWord(this.value)) {
-              ctrl.addKeyword(this.value);
+              if (ctrl.isReady()) {
+                ctrl.addKeyword(this.value);
+              }else{
+                ctrl.changeTheme(this.value);
+              }
               this.value = '';
             } else {
               alert("追加できません。既に入力済みです");

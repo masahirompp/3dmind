@@ -26,9 +26,11 @@ class DrawController {
 
   private currentTheme: string;
 
-  public setTheme(theme: string): void {
+  public getCurrentTheme(): string { return this.currentTheme; }
+
+  public changeTheme(theme: string): void {
     this.currentTheme = theme
-    if (!this.currentTheme) return;
+    if (!theme) return;
     if (this.themes[theme]) {
       this.onDraw(theme, this.themes[theme])
     } else {
@@ -38,23 +40,22 @@ class DrawController {
   }
 
   public addKeyword(keywordString: string): void {
-    if(!this.currentTheme) {
-      this.setTheme(keywordString);
-    }else{
-      var keyword = {
-        keyword: keywordString,
-        x: Math.random(), // * this.width,
-        y: Math.random() // * this.height
-      };
-      this.themes[this.currentTheme].push(keyword);
-    }
+    var keyword = {
+      keyword: keywordString,
+      x: Math.random(), // * this.width,
+      y: Math.random() // * this.height
+    };
+    this.themes[this.currentTheme].push(keyword);
     this.onDraw(this.currentTheme, this.themes[this.currentTheme]);
+  }
+
+  public isReady(): boolean {
+    return !(!this.currentTheme);
   }
 
   public isCurrentTheme(keyword: string): boolean {
     return this.currentTheme == keyword;
   }
-
 
   public validWord(keyword: string): boolean {
     if(!this.currentTheme) return true;
