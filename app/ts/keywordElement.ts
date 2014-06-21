@@ -6,7 +6,11 @@ class KeywordElement {
 
     var svg: any = d3.select('svg');
 
-    this.drawTheme(svg, [{keyword: theme, x: 0.5, y: 0.5}], width, height);
+    this.drawTheme(svg, [{
+      keyword: theme,
+      x: 0.5,
+      y: 0.5
+    }], width, height);
     this.drawKeywords(svg, keywords, width, height);
 
   }
@@ -26,6 +30,10 @@ class KeywordElement {
       .data(keywords)
       .enter()
       .append('ellipse')
+      .on('click', function(d) {
+        this.clear(d);
+        this.drilldown(d)
+      })
       .attr({
         'class': class_name,
         cx: function(d, i) {
@@ -44,6 +52,14 @@ class KeywordElement {
         rx: 100,
         ry: 50
       });
+
+  }
+
+  private static clear(keyword: Keyword): void {
+
+  }
+
+  private static drilldown(keyword: Keyword): void {
 
   }
 
@@ -73,4 +89,3 @@ class KeywordElement {
       });
   }
 }
-
