@@ -1,10 +1,20 @@
 /// <reference path="d3.d.ts" />
 
-var dataset : any = ['aaa','bbb','ccc'];
+var dataset : any = [10,20,30,40];
 
-d3.select('.container').selectAll('p')
+var $svg : any = d3.select('.container').append('svg');
+
+$svg.selectAll('circle')
 .data(dataset)
 .enter()
-.append('p')
-.text(function(d){return d;});
-
+.append('circle')
+.attr({
+  cx: function(d, i){
+    return i * 100 + 50;
+  },
+  cy: 100,
+  r: function(d){
+    return d;
+  },
+  fill: 'red'
+})
