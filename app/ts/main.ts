@@ -9,7 +9,10 @@ $(document)
     var themeStack: string[] = [];
 
     d3.select('.container-fluid')
-      .append('svg');
+      .append('svg')
+      .attr({xmlns: "http://www.w3.org/2000/svg",
+        width: width,
+        height: height - 20})
 
     var ctrl = new DrawController(width, height);
     ctrl.onDraw = function(theme: string, keywords: Keyword[]) {
