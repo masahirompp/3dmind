@@ -1,9 +1,10 @@
 /// <reference path="drawController.ts" />
 /// <reference path="jquery.d.ts" />
+/// <reference path="jqueryui.d.ts" />
 
 $(document)
   .ready(function() {
-
+    
     var width: number = document.documentElement.clientWidth;
     var height: number = document.documentElement.clientHeight;
     var themeStack: string[] = [];

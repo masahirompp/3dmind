@@ -4,23 +4,31 @@ class KeywordElement {
 
   public static draw(theme: string, keywords: Keyword[], width: number, height: number, depth: number): void {
     var svg: any = d3.select('svg');
+    var drag: any = d3.behavior.drag()
+    .on("drag", function(d,i) {
+      d.x += d3.event.dx
+      d.y += d3.event.dy
+      d3.select(this).attr("transform", function(d,i){
+          return "translate(" + [ d.x,d.y ] + ")"
+      })
+    });
 
-    this.drawTheme(svg, [{
+    this.drawTheme(svg, drag, [{
       keyword: theme,
       x: 0.5,
       y: 0.5
     }], width, height, depth);
-    this.drawKeywords(svg, keywords, width, height, depth + 1);
+    this.drawKeywords(svg, drag, keywords, width, height, depth + 1);
   }
 
-  private static drawTheme(svg: any, keywords: Keyword[], width: number, height: number, depth: number): void {
-    this.drawEllipse("theme", svg, keywords, width, height, depth);
-    this.drawText("theme", svg, keywords, width, height);
+  private static drawTheme(svg: any, drag: any, keywords: Keyword[], width: number, height: number, depth: number): void {
+    this.drawEllipse("theme", svg, drag, keywords, width, height, depth);
+    this.drawText("theme", svg, drag, keywords, width, height);
   }
 
-  private static drawKeywords(svg: any, keywords: Keyword[], width: number, height: number, depth: number): void {
-    this.drawEllipse("keyword", svg, keywords, width, height, depth);
-    this.drawText("keyword", svg, keywords, width, height);
+  private static drawKeywords(svg: any, drag: any, keywords: Keyword[], width: number, height: number, depth: number): void {
+    this.drawEllipse("keyword", svg, drag, keywords, width, height, depth);
+    this.drawText("keyword", svg, drag, keywords, width, height);
 
     jQuery.each(keywords, function(i:number, kw: Keyword) {
       var data = Array(KeywordElement.onWantChildSize(kw.keyword));
@@ -45,8 +53,7 @@ class KeywordElement {
 
   private static colorScale = d3.scale.category10();
 
-  private static drawEllipse(class_name: string, svg: any, keywords: Keyword[], width: number, height: number, depth: number): void {
-
+  private static drawEllipse(class_name: string, svg: any, drag: any, keywords: Keyword[], width: number, height: number, depth: number): void {
     svg.selectAll('ellipse.' + class_name)
       .data(keywords)
       .enter()
@@ -68,6 +75,7 @@ class KeywordElement {
           return KeywordElement.colorScale(depth % 10);
         }
       })
+      .call(drag)
       .transition()
       .duration(600)
       .attr({
@@ -89,7 +97,7 @@ class KeywordElement {
     (theme: string): number;
   };
 
-  private static drawText(class_name: string, svg: any, keywords: Keyword[], width: number, height: number): void {
+  private static drawText(class_name: string, svg: any, drag: any, keywords: Keyword[], width: number, height: number): void {
     svg.selectAll('text.' + class_name)
       .data(keywords)
       .enter()
