@@ -2,14 +2,25 @@
 
 class KeywordElement {
 
+  private static toXPos(x: number, t: number): number { return x * (t - 100) + 50 }
+  private static toYPos(x: number, t: number): number { return x * (t - 50) + 25 }
+
   public static draw(theme: string, keywords: Keyword[], width: number, height: number, depth: number): void {
     var svg: any = d3.select('svg');
     var drag: any = d3.behavior.drag()
     .on("drag", function(d,i) {
-      d.x += d3.event.dx
-      d.y += d3.event.dy
-      d3.select(this).attr("transform", function(d,i){
-          return "translate(" + [ d.x,d.y ] + ")"
+      d.x = (toXPos(d.x, width) + d3.event.dx) / width;
+      d.y = (toYPos(d.y, height) + d3.event.dy) / height;
+      d3.select(this).attr({
+        "transform": function(d,i){
+          return "translate(" + [ d3.event.dx, d3.event.dy ] + ")"
+        },
+        cx: function(d, i) {
+          return toXPos(d.x, width);
+        },
+        cy: function(d, i) {
+          return toYPos(d.y, height);
+        }
       })
     });
 
